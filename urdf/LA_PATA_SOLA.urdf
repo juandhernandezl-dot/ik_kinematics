@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- URDF exportado desde SolidWorks — adaptado para el paquete ROS 2 'parcial2'
+     Links:   base_link → link_c → link_p → link_r → efector (fixed)
+     Joints:  joint_c (revolute) | joint_p (revolute) | joint_r (revolute) | efector_joint (fixed)
+-->
+<robot name="LA_PATA_SOLA">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       BASE_LINK  (cuerpo fijo / cadera)
+  ═══════════════════════════════════════════════════════════════ -->
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.0010139 -0.76392 -0.0089359" rpy="0 0 0"/>
+      <mass value="27.883"/>
+      <inertia ixx="3.1945"    ixy="-1.3605E-05" ixz="-1.7157E-06"
+               iyy="0.82171"   iyz="-0.0002946"
+               izz="3.8521"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://parcial2/meshes/base_link.STL"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.79216 0.81961 0.93333 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://parcial2/meshes/base_link.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LINK_C  (coxa — eslabón 1)
+       joint_c: traslación z=0.1439 m, eje de rot. Z negativo
+  ═══════════════════════════════════════════════════════════════ -->
+  <link name="link_c">
+    <inertial>
+      <origin xyz="-0.029627 0.0019444 0.0056029" rpy="0 0 0"/>
+      <mass value="0.98211"/>
+      <inertia ixx="0.0025719" ixy="-4.7488E-06" ixz="0.00037503"
+               iyy="0.0023379" iyz="2.8924E-06"
+               izz="0.002486"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://parcial2/meshes/link_c.STL"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.79216 0.81961 0.93333 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://parcial2/meshes/link_c.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="joint_c" type="revolute">
+    <origin xyz="0 0 0.1439" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child  link="link_c"/>
+    <axis xyz="0 0 -1"/>
+    <limit lower="-1.57" upper="1.57" effort="0" velocity="0"/>
+  </joint>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LINK_P  (fémur — eslabón 2)
+       joint_p: traslación (-0.0403, 0, 0.075) + RPY(π/2, 0, -π/2)
+  ═══════════════════════════════════════════════════════════════ -->
+  <link name="link_p">
+    <inertial>
+      <origin xyz="0.18355 0.00017154 0.067984" rpy="0 0 0"/>
+      <mass value="1.0339"/>
+      <inertia ixx="0.0018527" ixy="-4.3892E-06" ixz="0.00040357"
+               iyy="0.0029183" iyz="6.5247E-06"
+               izz="0.0034221"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://parcial2/meshes/link_p.STL"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.79216 0.81961 0.93333 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://parcial2/meshes/link_p.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="joint_p" type="revolute">
+    <origin xyz="-0.0403 0 0.075" rpy="1.5708 0 -1.5706"/>
+    <parent link="link_c"/>
+    <child  link="link_p"/>
+    <axis xyz="0 0 -1"/>
+    <limit lower="-1.57" upper="1.57" effort="0" velocity="0"/>
+  </joint>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LINK_R  (tibia — eslabón 3)
+       joint_r: traslación (0.3505, -2.9381E-05, -0.00365) + yaw=0.026978 rad
+  ═══════════════════════════════════════════════════════════════ -->
+  <link name="link_r">
+    <inertial>
+      <origin xyz="0.046727 -4.0442E-09 0.088605" rpy="0 0 0"/>
+      <mass value="0.52233"/>
+      <inertia ixx="0.00057437" ixy="1.1769E-10"  ixz="-8.5393E-06"
+               iyy="0.00125"   iyz="-2.6679E-10"
+               izz="0.0016594"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://parcial2/meshes/link_r.STL"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.79216 0.81961 0.93333 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://parcial2/meshes/link_r.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="joint_r" type="revolute">
+    <origin xyz="0.3505 -2.9381E-05 -0.00365" rpy="0 0 0.026978"/>
+    <parent link="link_p"/>
+    <child  link="link_r"/>
+    <axis xyz="0 0 -1"/>
+    <limit lower="-1.57" upper="1.57" effort="0" velocity="0"/>
+  </joint>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       EFECTOR  (end-effector — joint FIJO, no consume DOF)
+       efector_joint: traslación (0.2905, -0.0010066, 0.093563)
+                      RPY(-0.18364, 1.5696, 1.3872)
+  ═══════════════════════════════════════════════════════════════ -->
+  <link name="efector">
+    <inertial>
+      <origin xyz="-0.00040133 0.0078149 -0.0004394" rpy="0 0 0"/>
+      <mass value="0.034795"/>
+      <inertia ixx="8.5047E-06" ixy="9.8465E-08" ixz="2.0066E-08"
+               iyy="1.5026E-05" iyz="1.0985E-07"
+               izz="8.5086E-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://parcial2/meshes/efector.STL"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.79216 0.81961 0.93333 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://parcial2/meshes/efector.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="efector_joint" type="fixed">
+    <origin xyz="0.2905 -0.0010066 0.093563" rpy="-0.18364 1.5696 1.3872"/>
+    <parent link="link_r"/>
+    <child  link="efector"/>
+    <axis xyz="0 0 0"/>
+  </joint>
+
+</robot>

@@ -2,25 +2,29 @@
 launch_pata.py
 ==============
 Lanza:
-  1. robot_state_publisher  — publica TF desde el URDF de la_pata_sola
-  2. joint_state_publisher_gui — sliders para mover las articulaciones
-  3. rviz2                  — visualización 3D
+  1. robot_state_publisher   — publica TF desde LA_PATA_SOLA.urdf
+                               (base_link → link_c → link_p → link_r → efector)
+  2. joint_state_publisher_gui — sliders para joint_c, joint_p, joint_r
+                                 (efector_joint es fixed, no aparece como slider)
+  3. rviz2                   — visualización 3D
 
 Estructura esperada del paquete parcial2:
     parcial2/
     ├── launch/
     │   └── launch_pata.py          ← este archivo
     ├── urdf/
-    │   └── la_pata_sola.urdf
+    │   └── LA_PATA_SOLA.urdf
     ├── meshes/
     │   ├── base_link.STL
     │   ├── link_c.STL
     │   ├── link_p.STL
-    │   └── link_r.STL
+    │   ├── link_r.STL
+    │   └── efector.STL             ← NUEVO
     └── config/
-        └── pata.rviz               (opcional, se crea automático si no existe)
+        └── pata.rviz               (opcional)
 
 Uso:
+    cd ~/parcial2_ws
     colcon build --symlink-install
     source install/setup.bash
     ros2 launch parcial2 launch_pata.py
@@ -35,7 +39,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
     pkg_share = get_package_share_directory("parcial2")
 
-    urdf_path = os.path.join(pkg_share, "urdf", "la_pata_sola.urdf")
+    urdf_path = os.path.join(pkg_share, "urdf", "LA_PATA_SOLA.urdf")
     rviz_path = os.path.join(pkg_share, "config", "pata.rviz")
 
     # Leer URDF como string para robot_state_publisher
@@ -55,7 +59,8 @@ def generate_launch_description():
     )
 
     # ── joint_state_publisher_gui ─────────────────────────────────
-    # Proporciona sliders interactivos para mover joint_c, joint_p, joint_r
+    # Sliders para joint_c, joint_p, joint_r [-1.57, 1.57]
+    # efector_joint (fixed) NO aparece — lo resuelve robot_state_publisher.
     jsp_gui_node = Node(
         package="joint_state_publisher_gui",
         executable="joint_state_publisher_gui",

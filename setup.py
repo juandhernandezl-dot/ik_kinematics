@@ -34,7 +34,7 @@ setup(
     zip_safe=True,
     maintainer='reds7',
     maintainer_email='juan_d.hernandez_l@uao.edu.co',
-    description='Paquete parcial 2 — visualización y cinemática de la pata sola',
+    description='Parcial 2 — visualización y cinemática de LA_PATA_SOLA (DH, 3 DOF + efector fijo)',
     license='MIT',
     tests_require=['pytest'],
     entry_points={
