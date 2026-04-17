@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- URDF exportado desde SolidWorks — adaptado para el paquete ROS 2 'parcial2' -->
+<robot name="la_pata_sola">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       BASE LINK  (cuerpo fijo / cadera)
+  ═══════════════════════════════════════════════════════════════ -->
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.00101390636321122 -0.729019689310458 -0.00893588084028024" rpy="0 0 0"/>
+      <mass value="27.8828413093943"/>
+      <inertia ixx="3.19453852794549"  ixy="-1.3605088640903E-05"
+               ixz="-1.71572868119312E-06"
+               iyy="0.821713317231372" iyz="-0.000294599561979439"
+               izz="3.85213098674935"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://parcial2/meshes/base_link.STL"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://parcial2/meshes/base_link.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LINK_C  (coxa — eslabón 1, rotación sobre Z)
+       joint_c:  traslación z = 0.1439 m desde base_link
+  ═══════════════════════════════════════════════════════════════ -->
+  <link name="link_c">
+    <inertial>
+      <origin xyz="-0.0296268240671317 0.00194443709759426 0.00560285248569747" rpy="0 0 0"/>
+      <mass value="0.982110186957628"/>
+      <inertia ixx="0.00257194309893486" ixy="-4.74882459357498E-06"
+               ixz="0.000375033680860801"
+               iyy="0.00233787132207173" iyz="2.89242201160099E-06"
+               izz="0.00248595798616944"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://parcial2/meshes/link_c.STL"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://parcial2/meshes/link_c.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="joint_c" type="revolute">
+    <origin xyz="0 0 0.1439" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child  link="link_c"/>
+    <axis xyz="0 0 -1"/>
+    <limit lower="-1.57" upper="1.57" effort="0" velocity="0"/>
+  </joint>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LINK_P  (fémur — eslabón 2, rotación sobre Z local)
+       joint_p:  traslación (-0.0403, 0, 0.075) + rotación RPY(π/2, 0, -π/2)
+  ═══════════════════════════════════════════════════════════════ -->
+  <link name="link_p">
+    <inertial>
+      <origin xyz="0.183551124934279 0.00017154363957206 0.0679844161424177" rpy="0 0 0"/>
+      <mass value="1.03386158270774"/>
+      <inertia ixx="0.00185267635708423" ixy="-4.38923080048466E-06"
+               ixz="0.000403571547615038"
+               iyy="0.00291827942897862" iyz="6.52471750998595E-06"
+               izz="0.00342207831363084"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://parcial2/meshes/link_p.STL"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://parcial2/meshes/link_p.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="joint_p" type="revolute">
+    <origin xyz="-0.0403 0 0.075" rpy="1.5708 0 -1.5706"/>
+    <parent link="link_c"/>
+    <child  link="link_p"/>
+    <axis xyz="0 0 -1"/>
+    <limit lower="-1.57" upper="1.57" effort="0" velocity="0"/>
+  </joint>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LINK_R  (tibia — eslabón 3, rotación sobre Z local)
+       joint_r:  traslación (0.3505, -2.9381E-05, -0.00365) + yaw=0.026978 rad
+  ═══════════════════════════════════════════════════════════════ -->
+  <link name="link_r">
+    <inertial>
+      <origin xyz="0.0467273676060766 -4.04422570605967E-09 0.0886045200025964" rpy="0 0 0"/>
+      <mass value="0.522331316228209"/>
+      <inertia ixx="0.000574365008314387" ixy="1.17685178957624E-10"
+               ixz="-8.53933466036227E-06"
+               iyy="0.00125001245680216"  iyz="-2.66794242487717E-10"
+               izz="0.001659392848682"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://parcial2/meshes/link_r.STL"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://parcial2/meshes/link_r.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="joint_r" type="revolute">
+    <origin xyz="0.3505 -2.9381E-05 -0.00365" rpy="0 0 0.026978"/>
+    <parent link="link_p"/>
+    <child  link="link_r"/>
+    <axis xyz="0 0 -1"/>
+    <limit lower="-1.57" upper="1.57" effort="0" velocity="0"/>
+  </joint>
+
+</robot>
