@@ -1,18 +1,3 @@
-"""
-launch_ik_gradiente.py
-==============
-Lanza:
-  1. robot_state_publisher  — publica TF desde LA_PATA_SOLA.urdf
-  2. gui_pata               — GUI FK + IK numérica (Jacobiana)
-  3. rviz2                  — visualización 3D
-
-Uso:
-    cd ~/parcial2_ws
-    colcon build --symlink-install
-    source install/setup.bash
-    ros2 launch parcial2 launch_ik_gradiente.py
-"""
-
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
@@ -28,7 +13,6 @@ def generate_launch_description():
     with open(urdf_path, "r") as f:
         robot_description = f.read()
 
-    # ── robot_state_publisher ──────────────────────────────────────
     rsp_node = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
@@ -40,17 +24,14 @@ def generate_launch_description():
         ],
     )
 
-    # ── GUI FK + IK numérica ───────────────────────────────────────
-    # Publica /joint_states → RSP genera TF → RViz2 mueve el modelo
     gui_node = Node(
         package="parcial2",
-        executable="gui_pata",
-        name="gui_pata",
+        executable="gui_geometric",
+        name="gui_geometric",
         output="screen",
         emulate_tty=True,
     )
 
-    # ── RViz2 ─────────────────────────────────────────────────────
     rviz_args = ["-d", rviz_path] if os.path.exists(rviz_path) else []
     rviz_node = Node(
         package="rviz2",
